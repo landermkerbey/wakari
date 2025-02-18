@@ -1,0 +1,38 @@
+#+TITLE: Architectural Roadmap
+
+An overview of the intended feature set of the =wakari.el= spaced
+repetition system. This serves as both a planning document and a
+request-for-comment.
+
+* TODO Application Entry Point
+
+The user should be able to access the following =wakari= functionality
+from anywhere in Emacs:
+
+- Begin a review session of all due items
+- Begin a review session of filtered items
+- View stats for the entire =wakari= collection
+- View stats for a filtered subset of the =wakari= collection
+
+Given the potential value of various flags (e.g. selecting an
+algorithm on the fly, doing a review session against a one-off filter,
+overriding item-per-day caps), consider having a single =wakari=
+function that drops the user into a transient menu.
+
+* TODO Review Session Logic
+
+* TODO Item Indexing
+
+* TODO Index Persistence
+
+* TODO Item Templating
+
+* TODO Tool Invocation Support
+
+* TODO Multiple Algorithm Support
+
+* TODO Extensible Item Relationship Model
+
+* TODO Review Data
+
+* TODO Progress Triggers

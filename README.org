@@ -1,0 +1,72 @@
+#+title: wakari.el - Extensible Spaced Repetition System
+#+author: Lander M Kerbey
+#+language: en
+
+Wakari provides a highly customizable [[https://en.wikipedia.org/wiki/Spaced_repetition][spaced repetition]] (henceforth
+"SR") system for knowledge retention and skill cultivation. It aims to
+address the limitations of existing SR systems for complex skill
+development by rejecting the strict flashcard paradigm and allowing
+the user to integrate arbitrary tools into their practice.
+
+Due to the current nascence of the project, this document and the
+architectural roadmap currently serve as documents of intent and
+requests for comment.
+
+* Premise
+
+Existing SR systems center on a flashcard model with varying degrees
+of support for non-interactive media such as images, audio, and
+video. If the system recognizes relationships between cards, this is
+generally limited to the 'sibling' model. The user must manually make
+all modifications to the collection of items under study at such time
+as is appropriate. While within this paradigm a regular SR practice can
+greatly improve a user's memory retention, it suffers from the
+following limitations:
+
+1. The lack of integration with other software tools limits the user's
+   ability to simulate the experience of tasks associated with them,
+   reducing the fidelity of the cultivated memory. The user may work
+   around this by writing prompts instructing them to perform such and
+   such an action and guess or observe the results, but this
+   introduces unnecessary friction.
+2. The lack of a robust relationship model between knowledge items
+   limit's the user's progression to item-by-item tracking; concepts
+   like prerequisites, obsoletion, sequencing, or even simple
+   randomization are not supported. Again, there are ways the user can
+   work around these limitations, but such methods are manual,
+   tedious, and require disruption of existing study sessions or
+   frequent backtracking during other item creation in order to be
+   timely.
+3. Taken together, issues 1 and 2 make the decomposition of complex
+   tasks into smaller chunks in a smooth study flow considerably more
+   difficult, leading many users to forego the potential benefits of
+   SR in 'skill' acquisition in the belief that SR is only good for
+   memorizing small chunks of information.
+4. Excepting previous Emacs-based SR efforts, other SR systems even
+   limit the potential of purely text-based items by compelling the
+   use of very limited text editors.
+
+By way of solution, Wakari aims to offer the following:
+
+1. Integration with arbitrary tooling. Emacs already offers various
+   means for the user to interact with any other tool on your
+   computer—or indeed, on any computer to which you have
+   access. Wakari will provide hooks that allow for code execution at
+   each point of a knowledge item's life cycle, or in the event the
+   user wants a focused session that will make heavy use of one
+   particular tool, hooks that allow for code execution at each point
+   of a review session's life cycle.
+2. A greatly expanded set of relationships between knowledge items,
+   coupled with a framework for extending relationships or creating
+   new ones. Out of the box, Wakari aims to support:
+
+   - Siblings
+   - Prerequisites
+   - Rotations
+   - Obsoletions
+   - Sequences
+
+   Beyond that, Wakari will also aim to make it easy for users to
+   define custom relationship behavior to suit their needs.
+3. Extremely powerful text-editing, though it gets that for free by
+   dint of living in Emacs.
