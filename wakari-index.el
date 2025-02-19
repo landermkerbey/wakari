@@ -20,15 +20,15 @@
 (defun wakari-index-find-cards-in-directory (directory)
   "Find all SRS cards in org files under DIRECTORY.
 Returns a list of (file . position) pairs for each card found."
-  (let ((default-directory directory)
-        cards)
+  (let (cards)
     (with-temp-buffer
       (call-process "rg" nil t nil
                     "--no-heading"
                     "--line-number"
                     "--follow"
                     (concat ":" wakari-index-tag ":")
-                    "*.org")
+                    "*.org"
+                    directory)
       (goto-char (point-min))
       (while (not (eobp))
         (when (looking-at "\\(.+\\):\\([0-9]+\\):")
