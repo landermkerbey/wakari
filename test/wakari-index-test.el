@@ -7,6 +7,12 @@
 
 (require 'test-helper)
 
+;; Verify required functions are available
+(describe "Environment setup"
+  (it "has wakari-index-find-cards function available"
+    (expect (fboundp 'wakari-index-find-cards) :to-be t
+            "wakari-index-find-cards function is not available. Check that wakari-index.el is properly loaded.")))
+
 (defvar wakari-test-dir nil
   "Temporary directory for test files.")
 
