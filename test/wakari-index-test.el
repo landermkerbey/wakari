@@ -6,6 +6,7 @@
 ;;; Code:
 
 (require 'buttercup)
+(require 'dash)
 (require 'wakari-index)
 
 (defvar wakari-test-dir nil

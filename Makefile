@@ -24,4 +24,5 @@ install-deps:
 		--eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)" \
 		--eval "(package-refresh-contents)" \
 		--eval "(package-install 'buttercup)" \
-		--eval "(package-install 'rec-mode)"
+		--eval "(package-install 'rec-mode)" \
+		--eval "(package-install 'dash)"
