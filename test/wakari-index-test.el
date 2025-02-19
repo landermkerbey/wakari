@@ -5,9 +5,7 @@
 
 ;;; Code:
 
-(require 'buttercup)
-(require 'dash)
-(require 'wakari-index)
+(require 'test-helper)
 
 (defvar wakari-test-dir nil
   "Temporary directory for test files.")
