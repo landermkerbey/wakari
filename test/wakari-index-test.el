@@ -52,7 +52,7 @@
   (it "finds cards in multiple directories"
     (let* ((subdir (expand-file-name "subdir" wakari-test-dir))
            (cards (wakari-index-find-cards wakari-test-dir subdir)))
-      (expect (length cards) :to-equal 8)  ; Each card is found twice due to overlap
+      (expect (length cards) :to-equal 6)  ; Only unique cards should be returned
       (expect (--count (string-match-p "test3.org$" (car it)) cards) :to-equal 2))))
 
 (provide 'wakari-index-test)

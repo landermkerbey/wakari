@@ -41,9 +41,11 @@ Returns a list of (file . position) pairs for each card found."
   "Find all SRS cards in org files under DIRECTORIES.
 If no directories are provided, use `default-directory'.
 Returns a list of (file . position) pairs for each card found."
-  (let ((dirs (or directories (list default-directory))))
-    (cl-loop for dir in dirs
-             append (wakari-index-find-cards-in-directory dir))))
+  (let* ((dirs (or directories (list default-directory)))
+         (cards (cl-loop for dir in dirs
+                        append (wakari-index-find-cards-in-directory dir))))
+    ;; Remove duplicates by comparing both file and position
+    (cl-remove-duplicates cards :test #'equal)))
 
 (provide 'wakari-index)
 ;;; wakari-index.el ends here
