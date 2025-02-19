@@ -32,6 +32,7 @@
 
 (require 'org)
 (require 'rec-mode)
+(require 'wakari-review)
 
 (defgroup wakari nil
   "Extensible spaced repetition system."
