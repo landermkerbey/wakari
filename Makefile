@@ -1,7 +1,7 @@
 EMACS ?= emacs
 BATCH = $(EMACS) -Q -batch -L . -L test
 
-ELS = wakari.el wakari-review.el
+ELS = wakari.el wakari-review.el wakari-index.el
 ELCS = $(ELS:.el=.elc)
 
 .PHONY: all clean test compile
