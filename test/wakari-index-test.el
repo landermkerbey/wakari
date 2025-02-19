@@ -10,8 +10,7 @@
 ;; Verify required functions are available
 (describe "Environment setup"
   (it "has wakari-index-find-cards function available"
-    (expect (fboundp 'wakari-index-find-cards) :to-be t
-            "wakari-index-find-cards function is not available. Check that wakari-index.el is properly loaded.")))
+    (expect (fboundp 'wakari-index-find-cards))))
 
 (defvar wakari-test-dir nil
   "Temporary directory for test files.")
@@ -30,8 +29,7 @@
 * Card 1 :srs-item:
 * Another heading
 ** Card 2 :srs-item:
-*** Deep heading")
-      (message "Created test1.org with content"))
+*** Deep heading"))
     
     (with-temp-file (expand-file-name "test2.org" wakari-test-dir)
       (insert "* Top level
