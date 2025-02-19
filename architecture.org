@@ -100,7 +100,7 @@ roughly to =anki='s notion of 'fields'. The user composes fields into
 cards at will, then defines relationships between the cards to shape
 their scheduling. Templates definitions are decoupled from the writing
 of atoms or the composing of cards, and are instead referenced by
-cards.
+cards as a property.
 
 If this all needs to be done manually every time, it creates tedious
 busy work, so functions are provided to smooth this process, up to and
@@ -110,7 +110,12 @@ always there.
 
 * TODO Review Data
 
-
+Review data is stored on a card-by-card basis, as the 'card' remains
+the actual unit of user interaction in =wakari=. This data is stored in
+property drawers under each card's heading. Different algorithms
+may require different data, so in order to support multiple
+algorithms, =wakari= allows the user to configure what data (beyond a
+certain 'universal' set) is stored.
 
 * TODO Index Persistence
 
@@ -121,7 +126,5 @@ always there.
 * TODO Multiple Algorithm Support
 
 * TODO Extensible Item Relationship Model
-
-Relationships between 
 
 * TODO Progress Triggers
