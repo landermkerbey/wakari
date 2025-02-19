@@ -19,9 +19,81 @@ algorithm on the fly, doing a review session against a one-off filter,
 overriding item-per-day caps), consider having a single =wakari=
 function that drops the user into a transient menu.
 
+* TODO Scheduling
+
+=wakari= maintains a collection-wide queue of knowledge items, the
+ordering of which is determined by a combination of the items'
+accumulated review data and the algorithm chosen by the user. =wakari=
+allows the user to choose between the following solutions for storing
+the queue:
+
+1. In-memory storage (like =org-fc=)
+2. =recutils= plain text database
+3. SQLite (how =org-roam= stores entries)
+
+The queue updates after each item review, according to the outcome of
+that review and the spacing algorithm.
+
 * TODO Review Session Logic
 
-* TODO Item Indexing
+A user initiates a review and a buffer displays the prompt of the
+first item in their review queue. After the user has performed the
+review task, they reveal the response. Depending on the algorithm
+used, the user may or may not have the option to score the subjective
+difficulty of the prompt. If the user is not given the option to score
+the subjective difficulty, they are prompted by a 'continue'
+option. After interacting with either of these, the user is shown the
+next item from the review queue.
+
+At any point during the lifecycle of an item review, the user may
+choose to either exit the review (killing the buffer and leaving the
+queue unaltered from before the current item was shown), or to edit
+the item, presenting a buffer with point at the heading serving as the
+source of the item. After the user finishes editing the item, they are
+taken back to the review buffer in the state in which they left it.
+
+* TODO Knowledge Item Model
+
+Previous spaced repetition systems have generally modeled knowledge as
+cards, where each card has a 'front' and a 'back'; the question or
+prompt is on the front, and after you've come up with a response to
+the prompt, you 'flip' the card to the back to see whether or not you
+succeeded.
+
+=anki= elaborates on this card model by having cards be subentities of
+notes. A user can define an arbitrary number of fields, and the note
+abstraction allows you to mix-and-match these fields to different
+templates referred to as 'card types'. This is a significant increase
+in expressive power and efficiency over the card-only model, because
+you can generate several cards exploring different aspects of the same
+information from one tightly associated set of input fields. It also
+encodes a sibling relationship between the generated cards so that you
+can filter your review queue accordingly and reduce interference
+effects.
+
+Making full use of this does require careful thought about how to
+template cards so that the same piece of information can be coherently
+presented in different contexts: e.g. if you're studying Japanese
+vocabulary and you want a single note to generate cards for
+recognizing the meaning of a word, pronouncing the word, and writing
+it out with the proper stroke order for each kanji, then each distinct
+card type will need appropriate text in the templates if you don't
+want to have to create and populate fields for those prompts on every
+note.
+
+The 'notes -> cards' model has two limitations:
+
+1. You must define a template for every card you want to generate from
+   the note. If a given note ends up using fewer fields than you set
+   the note type up for, it can simply not generate those unused
+   cards; however, if you find yourself wanting to add more fields to
+   get more cards, you have to modify the note type and define new
+   templates.
+2. Supporting relationship types beyond the 'sibling' type is
+   impractical. For more information, see *Extensible Item
+   Relationship Model*.
+
+* TODO Review Data
 
 * TODO Index Persistence
 
@@ -32,7 +104,5 @@ function that drops the user into a transient menu.
 * TODO Multiple Algorithm Support
 
 * TODO Extensible Item Relationship Model
-
-* TODO Review Data
 
 * TODO Progress Triggers
