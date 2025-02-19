@@ -1,5 +1,5 @@
 EMACS ?= emacs
-BATCH = $(EMACS) -Q -batch -L .
+BATCH = $(EMACS) -Q -batch -L . -L test
 
 ELS = wakari.el wakari-review.el
 ELCS = $(ELS:.el=.elc)
