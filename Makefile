@@ -14,7 +14,7 @@ clean:
 	rm -f $(ELCS)
 
 test:
-	$(BATCH) -l buttercup -f buttercup-run-discover
+	$(BATCH) --eval '(setq debug-on-error t)' -f package-initialize -L . -f buttercup-run-discover
 
 %.elc: %.el
 	$(BATCH) -f batch-byte-compile $<
