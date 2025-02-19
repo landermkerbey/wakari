@@ -16,7 +16,7 @@
   :type 'string
   :group 'wakari-index)
 
-(defun wakari-index-find-cards (directory)
+(defun wakari-index-find-cards-in-directory (directory)
   "Find all SRS cards in org files under DIRECTORY.
 Returns a list of (file . position) pairs for each card found."
   (let ((default-directory directory)
@@ -25,16 +25,25 @@ Returns a list of (file . position) pairs for each card found."
       (call-process "rg" nil t nil
                     "--no-heading"
                     "--line-number"
+                    "--follow"
                     (concat ":" wakari-index-tag ":")
                     "*.org")
       (goto-char (point-min))
       (while (not (eobp))
         (when (looking-at "\\(.+\\):\\([0-9]+\\):")
-          (push (cons (match-string 1)
+          (push (cons (expand-file-name (match-string 1))
                      (string-to-number (match-string 2)))
                 cards))
         (forward-line 1)))
     (nreverse cards)))
+
+(defun wakari-index-find-cards (&rest directories)
+  "Find all SRS cards in org files under DIRECTORIES.
+If no directories are provided, use `default-directory'.
+Returns a list of (file . position) pairs for each card found."
+  (let ((dirs (or directories (list default-directory))))
+    (cl-loop for dir in dirs
+             append (wakari-index-find-cards-in-directory dir))))
 
 (provide 'wakari-index)
 ;;; wakari-index.el ends here

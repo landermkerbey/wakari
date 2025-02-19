@@ -13,8 +13,9 @@
 
 (describe "Card indexing"
   (before-all
-    ;; Create temporary directory
+    ;; Create temporary directories
     (setq wakari-test-dir (make-temp-file "wakari-test-" t))
+    (make-directory (expand-file-name "subdir" wakari-test-dir))
     
     ;; Create test files
     (with-temp-file (expand-file-name "test1.org" wakari-test-dir)
@@ -28,20 +29,30 @@
       (insert "* Top level
 ** Card 3 :srs-item:
 ** Not a card
-*** Card 4 :srs-item:")))
+*** Card 4 :srs-item:"))
+
+    (with-temp-file (expand-file-name "subdir/test3.org" wakari-test-dir)
+      (insert "* Nested file
+** Card 5 :srs-item:
+*** Card 6 :srs-item:")))
   
   (after-all
     ;; Clean up test files
     (delete-directory wakari-test-dir t))
   
-  (it "finds all cards in org files"
+  (it "finds all cards in org files recursively"
     (let ((cards (wakari-index-find-cards wakari-test-dir)))
-      (expect (length cards) :to-equal 4)
-      ;; Verify each card is found
-      (expect (--any? (string-match-p "test1.org$" (car it)) cards)
-              :to-be t)
-      (expect (--any? (string-match-p "test2.org$" (car it)) cards)
-              :to-be t))))
+      (expect (length cards) :to-equal 6)
+      ;; Verify each file is found
+      (expect (--count (string-match-p "test1.org$" (car it)) cards) :to-equal 2)
+      (expect (--count (string-match-p "test2.org$" (car it)) cards) :to-equal 2)
+      (expect (--count (string-match-p "test3.org$" (car it)) cards) :to-equal 2)))
+  
+  (it "finds cards in multiple directories"
+    (let* ((subdir (expand-file-name "subdir" wakari-test-dir))
+           (cards (wakari-index-find-cards wakari-test-dir subdir)))
+      (expect (length cards) :to-equal 8)  ; Each card is found twice due to overlap
+      (expect (--count (string-match-p "test3.org$" (car it)) cards) :to-equal 2))))
 
 (provide 'wakari-index-test)
 ;;; wakari-index-test.el ends here
