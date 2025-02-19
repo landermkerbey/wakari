@@ -6,6 +6,7 @@
 ;;; Code:
 
 (require 'org)
+(require 'cl-lib)
 
 (defgroup wakari-index nil
   "Card indexing for Wakari."
