@@ -7,7 +7,6 @@
 
 (require 'buttercup)
 (require 'dash)
-(require 'rec-mode)
 
 ;; Add project root to load path
 (let ((project-root (locate-dominating-file default-directory "Cask")))

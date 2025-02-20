@@ -5,7 +5,6 @@
 
 (development
  (depends-on "buttercup")
- (depends-on "dash")
- (depends-on "rec-mode"))
+ (depends-on "dash"))
 
 (files "*.el")
