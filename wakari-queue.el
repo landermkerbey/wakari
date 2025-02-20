@@ -28,8 +28,11 @@
     (with-temp-buffer
       (rec-mode)
       (insert-file-contents queue-file)
-      (when (rec-cmd-goto-next-rec)
-        (rec-field-value "path")))))
+      (message "Buffer contents: %S" (buffer-string))
+      (let ((found (rec-cmd-goto-next-rec)))
+        (message "Found record: %S" found)
+        (when found
+          (rec-get-field "path"))))))
 
 (defun wakari-queue-next (queue-file)
   "Get and remove the next card path from QUEUE-FILE."
