@@ -4,8 +4,7 @@
 ;; Test suite for wakari-queue.el
 
 ;;; Code:
-(require 'buttercup)
-(require 'wakari-queue)
+(require 'test-helper)
 
 (describe "Queue operations"
   (let (queue-file)
