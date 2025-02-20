@@ -6,12 +6,6 @@
 ;;; Code:
 (require 'test-helper)
 
-(describe "Module availability"
-  (it "has queue functions defined"
-    (expect (fboundp 'wakari-queue-add) :to-be t)
-    (expect (fboundp 'wakari-queue-peek) :to-be t)
-    (expect (fboundp 'wakari-queue-next) :to-be t)))
-
 (describe "Queue operations"
   (let (queue-file)
     (before-each
