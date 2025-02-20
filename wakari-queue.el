@@ -28,7 +28,7 @@
     (with-temp-buffer
       (rec-mode)
       (insert-file-contents queue-file)
-      (when (rec-goto-next-record)
+      (when (rec-mode-goto-next-record)
         (rec-field-value "path")))))
 
 (defun wakari-queue-next (queue-file)
@@ -38,7 +38,7 @@
       (with-temp-buffer
         (rec-mode)
         (insert-file-contents queue-file)
-        (when (rec-goto-next-record)
+        (when (rec-mode-goto-next-record)
           (rec-delete-record)
           (write-region (point-min) (point-max) queue-file)))
       next-card)))
