@@ -13,7 +13,6 @@
   (add-to-list 'load-path project-root))
 
 (require 'wakari-index)
-(require 'wakari-queue)
 
 (provide 'test-helper)
 ;;; test-helper.el ends here
