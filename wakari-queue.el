@@ -6,35 +6,41 @@
 ;;; Code:
 (require 'rec-mode)
 
+(defun wakari-queue--ensure-descriptor (queue-file)
+  "Ensure QUEUE-FILE has proper rec descriptor."
+  (unless (file-exists-p queue-file)
+    (with-temp-file queue-file
+      (insert "%rec: Card\n%doc: Queue of cards for review\n%mandatory: path\n"))))
+
 (defun wakari-queue-add (queue-file card-path)
   "Add CARD-PATH to the queue stored in QUEUE-FILE."
+  (wakari-queue--ensure-descriptor queue-file)
   (with-temp-buffer
-    (when (file-exists-p queue-file)
-      (insert-file-contents queue-file))
+    (rec-mode)
+    (insert-file-contents queue-file)
     (goto-char (point-max))
-    (insert "\n%rec: Card\npath: " card-path "\n")))
+    (rec-insert-record "Card" `(("path" ,card-path)))
+    (write-region (point-min) (point-max) queue-file)))
 
 (defun wakari-queue-peek (queue-file)
   "Return the next card path from QUEUE-FILE without removing it."
   (when (file-exists-p queue-file)
     (with-temp-buffer
+      (rec-mode)
       (insert-file-contents queue-file)
-      (goto-char (point-min))
-      (when (re-search-forward "^path: \\(.+\\)$" nil t)
-        (match-string 1)))))
+      (when (rec-goto-next-record)
+        (rec-field-value "path")))))
 
 (defun wakari-queue-next (queue-file)
   "Get and remove the next card path from QUEUE-FILE."
   (let ((next-card (wakari-queue-peek queue-file)))
     (when next-card
       (with-temp-buffer
+        (rec-mode)
         (insert-file-contents queue-file)
-        (goto-char (point-min))
-        (when (re-search-forward "^%rec: Card$" nil t)
-          (let ((start (match-beginning 0)))
-            (forward-paragraph)
-            (delete-region start (point))
-            (write-region (point-min) (point-max) queue-file))))
+        (when (rec-goto-next-record)
+          (rec-delete-record)
+          (write-region (point-min) (point-max) queue-file)))
       next-card)))
 
 (provide 'wakari-queue)
